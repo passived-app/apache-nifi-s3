@@ -36,21 +36,17 @@ RUN cd s3fs-fuse && ./autogen.sh && ./configure && make && make install
 
 RUN cp s3fs-fuse/src/s3fs /usr/local/bin/s3fs
 
+RUN rm -rf s3fs-fuse
 
-RUN echo ${ACCESS_KEY}:${SECRET_KEY} > /root/.passwd-s3fs
-RUN echo ${ACCESS_KEY}:${SECRET_KEY} > test.txt
-RUN chmod 600 /root/.passwd-s3fs
+RUN "user_allow_other" > /etc/fuse.conf
+
+USER nifi
 
 RUN mkdir -p ${NIFI_HOME}/script
 RUN chown nifi ${NIFI_HOME}/script
 
-RUN if ! grep -q 'init-s3fs' /etc/fstab ; then \
-      echo '# init-s3fs' >> /etc/fstab ; \
-      echo s3fs#${BUCKET_NAME} ${NIFI_HOME}/script fuse _netdev,passwd_file=/root/.passwd-s3fs,allow_other,use_path_request_style,endpoint=${S3_REGION},url=${S3_URL} 0 0 > /etc/fstab ; \
-    fi
-
-USER nifi
-
 WORKDIR ${NIFI_HOME}
 
-ENTRYPOINT ["../scripts/start.sh"]
+COPY run_nifi.sh ../scripts/run_nifi.sh
+
+ENTRYPOINT ["../scripts/run_nifi.sh"]
