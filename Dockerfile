@@ -43,8 +43,8 @@ RUN chown nifi ${NIFI_HOME}/script
 
 RUN if ! grep -q 'init-s3fs' /etc/fstab ; then \
       echo '# init-s3fs' >> /etc/fstab ; \
-      echo 's3fs#$BUCKET_NAME $NIFI_HOME/script fuse _netdev,passwd_file=/root/.passwd-s3fs,allow_other,use_path_request_style,url=$S3_URL 0 0' >> /etc/fstab ; \
-      envsubst < "/etc/fstab" > "/etc/fstab" ; \
+      echo 's3fs#$BUCKET_NAME $NIFI_HOME/script fuse _netdev,passwd_file=/root/.passwd-s3fs,allow_other,use_path_request_style,url=$S3_URL 0 0' >> fstab.source ; \
+      envsubst < fstab.source > /etc/fstab ; \
     fi
 
 USER nifi
