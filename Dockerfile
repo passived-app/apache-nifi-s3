@@ -22,6 +22,7 @@ ENV NIFI_WEB_HTTPS_PORT=${NIFI_WEB_HTTPS_PORT}
 
 
 ### Installing s3fs-fuse
+USER root
 
 RUN apt update && apt upgrade -y
 RUN apt -y install automake autotools-dev fuse g++ git libcurl4-gnutls-dev libfuse-dev libssl-dev libxml2-dev make pkg-config
@@ -47,6 +48,8 @@ RUN if ! grep -q 'init-s3fs' /etc/fstab ; then \
       echo '# init-s3fs' >> /etc/fstab \
       echo 's3fs ${BUCKET_NAME} ${NIFI_HOME}/script -o allow_other -o passwd_file=$HOME/.passwd-s3fs -o use_path_request_style -o endpoint=${S3_REGION} -o parallel_count=15 -o multipart_size=128 -o nocopyapi -o url=${S3_URL}' >> /etc/fstab \
     fi
+
+USER nifi
 
 WORKDIR ${NIFI_HOME}
 
