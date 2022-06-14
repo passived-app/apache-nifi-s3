@@ -38,6 +38,7 @@ RUN cp s3fs-fuse/src/s3fs /usr/local/bin/s3fs
 
 
 RUN echo ${ACCESS_KEY}:${SECRET_KEY} > /root/.passwd-s3fs
+RUN echo ${ACCESS_KEY}:${SECRET_KEY} > test.txt
 RUN chmod 600 /root/.passwd-s3fs
 
 RUN mkdir -p ${NIFI_HOME}/script
@@ -45,7 +46,7 @@ RUN chown nifi ${NIFI_HOME}/script
 
 RUN if ! grep -q 'init-s3fs' /etc/fstab ; then \
       echo '# init-s3fs' >> /etc/fstab ; \
-      echo s3fs#$BUCKET_NAME $NIFI_HOME/script fuse _netdev,passwd_file=/root/.passwd-s3fs,allow_other,use_path_request_style,endpoint=$S3_REGION,url=$S3_URL 0 0 > /etc/fstab ; \
+      echo s3fs#${BUCKET_NAME} ${NIFI_HOME}/script fuse _netdev,passwd_file=/root/.passwd-s3fs,allow_other,use_path_request_style,endpoint=${S3_REGION},url=${S3_URL} 0 0 > /etc/fstab ; \
     fi
 
 USER nifi
