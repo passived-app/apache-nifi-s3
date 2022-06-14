@@ -40,6 +40,10 @@ RUN rm -rf s3fs-fuse
 
 RUN echo "user_allow_other" >> /etc/fuse.conf
 
+COPY run_nifi.sh run_nifi.sh
+RUN chown nifi run_nifi.sh
+RUN chmod +x run_nifi.sh
+
 USER nifi
 
 RUN mkdir -p ${NIFI_HOME}/script
@@ -47,7 +51,5 @@ RUN chown nifi ${NIFI_HOME}/script
 
 WORKDIR ${NIFI_HOME}
 
-COPY run_nifi.sh run_nifi.sh
-RUN chmod +x run_nifi.sh
 
 ENTRYPOINT ["../scripts/run_nifi.sh"]
