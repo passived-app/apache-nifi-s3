@@ -25,7 +25,7 @@ ENV NIFI_WEB_HTTPS_PORT=${NIFI_WEB_HTTPS_PORT}
 USER root
 
 RUN apt update && apt upgrade -y
-RUN apt -y install automake autotools-dev fuse g++ git libcurl4-gnutls-dev libfuse-dev libssl-dev libxml2-dev make pkg-config
+RUN apt -y install automake nano autotools-dev gettext-base fuse g++ git libcurl4-gnutls-dev libfuse-dev libssl-dev libxml2-dev make pkg-config
 
 RUN git clone https://github.com/s3fs-fuse/s3fs-fuse.git
 
@@ -43,7 +43,8 @@ RUN chown nifi ${NIFI_HOME}/script
 
 RUN if ! grep -q 'init-s3fs' /etc/fstab ; then \
       echo '# init-s3fs' >> /etc/fstab ; \
-      echo 's3fs$BUCKET_NAME $NIFI_HOME/script fuse _netdev,passwd_file=/root/.passwd-s3fs,allow_other,use_path_request_style,url=$S3_URL 0 0' >> /etc/fstab ; \
+      echo 's3fs#$BUCKET_NAME $NIFI_HOME/script fuse _netdev,passwd_file=/root/.passwd-s3fs,allow_other,use_path_request_style,url=$S3_URL 0 0' >> /etc/fstab ; \
+      envsubst < "/etc/fstab" > "/etc/fstab" ; \
     fi
 
 USER nifi
