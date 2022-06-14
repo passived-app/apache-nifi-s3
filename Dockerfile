@@ -38,7 +38,7 @@ RUN cp s3fs-fuse/src/s3fs /usr/local/bin/s3fs
 
 RUN rm -rf s3fs-fuse
 
-RUN "user_allow_other" > /etc/fuse.conf
+RUN "user_allow_other" >> /etc/fuse.conf
 
 USER nifi
 
