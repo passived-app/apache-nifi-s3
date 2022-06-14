@@ -41,11 +41,9 @@ RUN chmod 600 /root/.passwd-s3fs
 RUN mkdir -p ${NIFI_HOME}/script
 RUN chown nifi ${NIFI_HOME}/script
 
-RUN s3fs ${BUCKET_NAME} ${NIFI_HOME}/script -o allow_other -o passwd_file=/root/.passwd-s3fs -o use_path_request_style -o endpoint=${S3_REGION} -o parallel_count=15 -o multipart_size=128 -o nocopyapi -o url=${S3_URL}
-
 RUN if ! grep -q 'init-s3fs' /etc/fstab ; then \
       echo '# init-s3fs' >> /etc/fstab ; \
-      echo 's3fs$BUCKET_NAME /mount-point fuse _netdev,passwd_file=/root/.passwd-s3fs,allow_other,use_path_request_style,url=$S3_URL 0 0' >> /etc/fstab ; \
+      echo 's3fs$BUCKET_NAME $NIFI_HOME/script fuse _netdev,passwd_file=/root/.passwd-s3fs,allow_other,use_path_request_style,url=$S3_URL 0 0' >> /etc/fstab ; \
     fi
 
 USER nifi
