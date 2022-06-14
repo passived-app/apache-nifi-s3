@@ -48,5 +48,6 @@ RUN chown nifi ${NIFI_HOME}/script
 WORKDIR ${NIFI_HOME}
 
 COPY run_nifi.sh ../scripts/run_nifi.sh
+RUN chmod +x ../scripts/run_nifi.sh
 
 ENTRYPOINT ["../scripts/run_nifi.sh"]
