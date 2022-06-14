@@ -1,0 +1,10 @@
+version: '2'
+services:
+  service:
+    image: passivedapp/apache-nifi-s3
+    ports:
+      - 8080:8080
+      - 8443:8443
+      - 10000:10000
+      - 8000:8000
+    restart: always
