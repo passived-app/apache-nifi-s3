@@ -52,4 +52,4 @@ RUN chown nifi ${NIFI_HOME}/script
 WORKDIR ${NIFI_HOME}
 
 
-ENTRYPOINT ["../scripts/run_nifi.sh"]
+ENTRYPOINT ["./run_nifi.sh"]
