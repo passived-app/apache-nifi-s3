@@ -34,10 +34,11 @@ RUN cd s3fs-fuse && ./autogen.sh && ./configure && make && make install
 
 RUN cp s3fs-fuse/src/s3fs /usr/local/bin/s3fs
 
-RUN echo ${ACCESS_KEY}:${SECRET_KEY} > $HOME/.passwd-s3fs
-RUN chmod 600 $HOME/.passwd-s3fs
+RUN echo ${ACCESS_KEY}:${SECRET_KEY} > /root/.passwd-s3fs
+RUN chmod 600 /root/.passwd-s3fs
 
 RUN mkdir -p ${NIFI_HOME}/script
+RUN chown nifi ${NIFI_HOME}/script
 
 RUN if ! grep -q 'init-s3fs' /etc/fstab ; then \
       echo '# init-s3fs' >> /etc/fstab ; \
