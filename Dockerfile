@@ -15,6 +15,8 @@ ARG BUCKET_NAME
 ARG S3_REGION=fr-par
 ARG S3_URL=https://s3.fr-par.scw.cloud
 
+ENV BUCKET_NAME=${BUCKET_NAME}
+
 ENV SINGLE_USER_CREDENTIALS_USERNAME=${SINGLE_USER_CREDENTIALS_USERNAME}
 ENV SINGLE_USER_CREDENTIALS_PASSWORD=${SINGLE_USER_CREDENTIALS_PASSWORD}
 
@@ -43,8 +45,7 @@ RUN chown nifi ${NIFI_HOME}/script
 
 RUN if ! grep -q 'init-s3fs' /etc/fstab ; then \
       echo '# init-s3fs' >> /etc/fstab ; \
-      echo 's3fs#$BUCKET_NAME $NIFI_HOME/script fuse _netdev,passwd_file=/root/.passwd-s3fs,allow_other,use_path_request_style,url=$S3_URL 0 0' >> fstab.source ; \
-      envsubst < fstab.source > /etc/fstab ; \
+      echo s3fs#${BUCKET_NAME} ${NIFI_HOME}/script fuse _netdev,passwd_file=/root/.passwd-s3fs,allow_other,use_path_request_style,endpoint=${S3_REGION},url=${S3_URL} 0 0 > fstab.source ; \
     fi
 
 USER nifi
