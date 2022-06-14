@@ -29,7 +29,7 @@ RUN apt -y install automake autotools-dev fuse g++ git libcurl4-gnutls-dev libfu
 
 RUN git clone https://github.com/s3fs-fuse/s3fs-fuse.git
 RUN cd s3fs-fuse
-RUN sed -i 's/MAX_MULTIPART_CNT         = 10 /MAX_MULTIPART_CNT         = 1 /' src/fdcache_entity.cpp
+RUN sed -i 's/MAX_MULTIPART_CNT         = 10 /MAX_MULTIPART_CNT         = 1 /' ./src/fdcache_entity.cpp
 
 RUN ./autogen.sh
 RUN ./configure
@@ -37,7 +37,7 @@ RUN make
 
 RUN make install
 
-RUN cp src/s3fs /usr/local/bin/s3fs
+RUN cp ./src/s3fs /usr/local/bin/s3fs
 
 RUN echo ${ACCESS_KEY}:${SECRET_KEY} > $HOME/.passwd-s3fs
 RUN chmod 600 $HOME/.passwd-s3fs
