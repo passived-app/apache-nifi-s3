@@ -65,16 +65,40 @@ spec:
 docker run -d \
     -e SINGLE_USER_CREDENTIALS_USERNAME=admin \
     -e SINGLE_USER_CREDENTIALS_PASSWORD=<default-password-for-admin> \
-    -e SINGLE_USER_CREDENTIALS_USERNAME=8443 \
-    -e SINGLE_USER_CREDENTIALS_USERNAME=<bucket-access-key> \
-    -e SINGLE_USER_CREDENTIALS_USERNAME=<bucket-secret-key> \
-    -e SINGLE_USER_CREDENTIALS_USERNAME=<your-bucket-name> \
-    -e SINGLE_USER_CREDENTIALS_USERNAME=https://s3.fr-par.scw.cloud \
-    -e SINGLE_USER_CREDENTIALS_USERNAME=fr-par \
+    -e NIFI_WEB_HTTPS_PORT=8443 \
+    -e ACCESS_KEY=<bucket-access-key> \
+    -e SECRET_KEY=<bucket-secret-key> \
+    -e BUCKET_NAME=<your-bucket-name> \
+    -e S3_URL=https://s3.fr-par.scw.cloud \
+    -e S3_REGION=fr-par \
     --name apache-nifi-s3 \
      passivedapp/apache-nifi-s3 
 
-
 ```
  
+## Parameters
+
+| Parameter    | Description                                          |
+|--------------|------------------------------------------------------|
+| `SINGLE_USER_CREDENTIALS_USERNAME` | The username for the apache/nifi                     |
+| `SINGLE_USER_CREDENTIALS_PASSWORD`   | The password for the apache/nifi instance            |
+| `NIFI_WEB_HTTPS_PORT`   | The port of the apache/nifi project. (default: 8443) |
+| `ACCESS_KEY`   | Bucket Access Key                                    |
+| `SECRET_KEY`   | Bucket Secret Key                                    |
+| `BUCKET_NAME`   | Bucket Name                                          |
+| `S3_URL`   | S3 URL of your Bucket Cloud Provider                 |
+| `S3_REGION`   | S3 Region of your Bucket Cloud Provider              |
+
+
+## S3 Bucket Urls for different Cloud Provider
+
+If you are using other S3 provider than AWS here are some example Urls:
+
+### Scaleway
+Region Example: fr-par \
+https://s3.$lt;REGION&gt;.scw.cloud
+
+### AWS
+Region Example: us-west-2 \
+https://s3.&lt;REGION&gt;.amazonaws.com
 
