@@ -96,9 +96,9 @@ If you are using other S3 provider than AWS here are some example Urls:
 
 ### Scaleway
 Region Example: fr-par \
-https://s3.$lt;REGION&gt;.scw.cloud
+https://s3.<REGION>.scw.cloud
 
 ### AWS
 Region Example: us-west-2 \
-https://s3.&lt;REGION&gt;.amazonaws.com
+https://s3.<REGION>.amazonaws.com
 
