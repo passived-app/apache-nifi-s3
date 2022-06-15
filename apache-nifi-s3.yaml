@@ -21,6 +21,20 @@ spec:
           ports:
             - name: https
               containerPort: 8443
-          envFrom:
-            - configMapRef:
-                name: nifi-config
+          env:
+            - name: SINGLE_USER_CREDENTIALS_USERNAME
+              value: admin
+            - name: SINGLE_USER_CREDENTIALS_PASSWORD
+              value: "<default-password-for-admin>"
+            - name: NIFI_WEB_HTTPS_PORT
+              value: '8443'
+            - name: ACCESS_KEY
+              value: "<bucket-access-key>"
+            - name: SECRET_KEY
+              value: "<bucket-secret-key>"
+            - name: BUCKET_NAME
+              value: "<your-bucket-name>"
+            - name: S3_URL
+              value: https://s3.fr-par.scw.cloud
+            - name: S3_REGION
+              value: fr-par
