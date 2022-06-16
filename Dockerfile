@@ -27,7 +27,7 @@ ENV NIFI_WEB_HTTPS_PORT=${NIFI_WEB_HTTPS_PORT}
 USER root
 
 RUN apt update && apt upgrade -y
-RUN apt-get install python3.8 -y
+RUN apt-get install python3 -y
 RUN apt-get install python3-pip -y
 RUN apt -y install automake nano autotools-dev gettext-base fuse g++ git libcurl4-gnutls-dev libfuse-dev libssl-dev libxml2-dev make pkg-config
 
