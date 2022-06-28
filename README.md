@@ -88,6 +88,7 @@ docker run -d \
 | `BUCKET_NAME`   | Bucket Name                                          |
 | `S3_URL`   | S3 URL of your Bucket Cloud Provider                 |
 | `S3_REGION`   | S3 Region of your Bucket Cloud Provider              |
+| `SPECIAL_PARAMS` | You can send any params to the s3fs command |
 
 
 ## S3 Bucket Urls for different Cloud Provider
